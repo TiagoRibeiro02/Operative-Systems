@@ -1,73 +1,79 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void streamCopy ( FILE * entrada, FILE * saida);
 void alteraCharControlo ( FILE * entrada, FILE * saida );
 void mostraNumLinha ( FILE * entrada, FILE * saida );
 
 int main( int argc, char *argv[] ){
-   if ( 1 == argc )
-        streamCopy ( stdin,  stdout);
-   else {
+  if ( 1 == argc ){ 
+    streamCopy (stdin, stdout);
+  }else if (2 == argc){
+    FILE *fptr1;
+    if(strcmp(argv[1], "-T") == 0){
+      alteraCharControlo(stdin, stdout);
+    }else if(strcmp(argv[1], "-n") == 0){
+      mostraNumLinha(stdin, stdout);
+    }else{
+      fptr1 = fopen(argv[1], "r");
+      if (fptr1 == NULL){
+        printf("Cannot open file %s \n", argv[1]);
+        exit(0);
+      }
+      streamCopy(fptr1, stdout);
+      fclose(fptr1);
+    }
+  }else {
     FILE *fptr1;
     int start=1;
     if(argv[1][0] == '-'){
-      start = 2;
+      start = 2; 
     }
-	for(int i=start; i< argc; i++){
-     	 	fptr1 = fopen(argv[i], "r");
-      		if (fptr1 == NULL){
-        		printf("Cannot open file %s \n", argv[i]);
-        		exit(0);
-      		}
 
-      	if(start==2){
-        	if(strcmp(argv[1], "-T") == 0){
-          		alteraCharControlo(fptr1, stdout);
-		}
-       	 	else if(strcmp(argv[1], "-n") == 0){
-          		mostraNumLinha(fptr1, stdout);
-		}
-      	}
-      	else{
-        	streamCopy(fptr1, stdout);
-	}
-      	fclose(fptr1);
-    }
-}
-   return 0;
-}
+    for(int i=start; i< argc; i++){
+      fptr1 = fopen(argv[i], "r");
+      if (fptr1 == NULL){
+        printf("Cannot open file %s \n", argv[i]);
+        exit(0);
+      }
 
-void streamCopy ( FILE * entrada,  FILE * saida ){
-    int ch;
-    while ( (ch=fgetc(entrada)) != EOF ){
-       fputc( ch, saida);
+      if(start==2){
+        if(strcmp(argv[1], "-T") == 0)
+          alteraCharControlo(fptr1, stdout);
+        else if(strcmp(argv[1], "-n") == 0)
+          mostraNumLinha(fptr1, stdout);
+      }
+      else{
+        streamCopy(fptr1, stdout);
+      fclose(fptr1);
+      }
     }
+  }
+
+ return 0;
 }
 
-/*
-void alteraCharControlo ( FILE * entrada, FILE * saida ){
- int ch;
+
+void streamCopy ( FILE * entrada, FILE * saida ){
+ int ch; 
  while ( (ch=fgetc(entrada)) != EOF ){
-  if( ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) || (ch >= '0' && ch <= '9'))
+ fputc( ch, saida);
+ }
+}
+
+void alteraCharControlo ( FILE * entrada, FILE * saida ){
+ int ch; 
+ while ( (ch=fgetc(entrada)) != EOF ){
+  if( ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) || (ch >= '0' && ch <= '9')){
     fputc(ch, saida);
-  else
+  }else{
     fputs("^I", saida);
   }
-}
-*/
-
-void alteraCharControlo ( FILE * entrada, FILE * saida ){
- int ch;
- while ( (ch=fgetc(entrada)) != EOF ){
-  if (ch == '\t')
-	fputs("^I", saida);
-  else
-    fputc(ch, saida);
-  }
+ }
 }
 
 void mostraNumLinha ( FILE * entrada, FILE * saida ){
- int ch;
+ int ch; 
  int linha=1;
  fpos_t position;
  printf("%-10d", 0);

@@ -1,0 +1,241 @@
+teste1:
+teste1
+ola
+teste
+
+teste2:
+1:lima:236 
+4:maranja:355 
+8:maca:370 
+12:uva:5400 
+13:limão:350
+
+teste3:
+1:lima:236 
+4:maranja:355 
+8:maca:370 
+12:uva:5400 
+13:limão:350
+
+Teste4:
+1:lima:236 
+4:maranja:355 
+8:maca:370 
+12:uva:5400 
+13:limão:350
+#include <stdio.h>
+#include <stdlib.h>
+
+void streamCopy ( FILE * entrada, FILE * saida);
+void alteraCharControlo ( FILE * entrada, FILE * saida );
+void mostraNumLinha ( FILE * entrada, FILE * saida );
+
+int main( int argc, char *argv[] ){
+  if ( 1 == argc ){ 
+    streamCopy (stdin, stdout);
+  }else if (2 == argc){
+    FILE *fptr1;
+    if(strcmp(argv[1], "-T") == 0){
+      alteraCharControlo(stdin, stdout);
+    }else if(strcmp(argv[1], "-n") == 0){
+      mostraNumLinha(stdin, stdout);
+    }else{
+      fptr1 = fopen(argv[1], "r");
+      if (fptr1 == NULL){
+        printf("Cannot open file %s \n", argv[1]);
+        exit(0);
+      }
+      streamCopy(fptr1, stdout);
+      fclose(fptr1);
+    }
+  }else {
+    FILE *fptr1;
+    int start=1;
+    if(argv[1][0] == '-'){
+      start = 2; 
+    }
+
+    for(int i=start; i< argc; i++){
+      fptr1 = fopen(argv[i], "r");
+      if (fptr1 == NULL){
+        printf("Cannot open file %s \n", argv[i]);
+        exit(0);
+      }
+
+      if(start==2){
+        if(strcmp(argv[1], "-T") == 0)
+          alteraCharControlo(fptr1, stdout);
+        else if(strcmp(argv[1], "-n") == 0)
+          mostraNumLinha(fptr1, stdout);
+      }
+      else{
+        streamCopy(fptr1, stdout);
+      fclose(fptr1);
+      }
+    }
+  }
+
+ return 0;
+}
+
+
+void streamCopy ( FILE * entrada, FILE * saida ){
+ int ch; 
+ while ( (ch=fgetc(entrada)) != EOF ){
+ fputc( ch, saida);
+ }
+}
+
+void alteraCharControlo ( FILE * entrada, FILE * saida ){
+ int ch; 
+ while ( (ch=fgetc(entrada)) != EOF ){
+  if( ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) || (ch >= '0' && ch <= '9')){
+    fputc(ch, saida);
+  }else{
+    fputs("^I", saida);
+  }
+ }
+}
+
+void mostraNumLinha ( FILE * entrada, FILE * saida ){
+ int ch; 
+ int linha=1;
+ fpos_t position;
+ printf("%-10d", 0);
+ while ((ch=fgetc(entrada)) != EOF ){
+   if(ch == 10){
+     fgetpos(entrada, &position);
+     if((fgetc(entrada)) == EOF ){
+       fprintf(saida, "\n");
+     }
+     else{
+        fprintf(saida, "\n%-10d", linha);
+        fsetpos(entrada, &position);
+     }
+     linha++;
+   }
+   else
+    fputc( ch, saida);
+ }
+}
+
+Teste5:
+1:lima:236 
+4:maranja:355 
+8:maca:370 
+12:uva:5400 
+13:limão:350
+Cannot open file naoexiste 
+
+Teste6:
+teste^Iola^Iisto^I^I^I^Ium^Iteste^I
+
+Teste7:
+1^Ilima^I236^I^I4^Imaranja^I355^I^I8^Imaca^I370^I^I12^Iuva^I5400^I^I13^Ilim^I^Io^I350^I^Iinclude^I^Istdio^Ih^I^I^Iinclude^I^Istdlib^Ih^I^I^Ivoid^IstreamCopy^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^Ivoid^IalteraCharControlo^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^I^Ivoid^ImostraNumLinha^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^I^I^Iint^Imain^I^Iint^Iargc^I^Ichar^I^Iargv^I^I^I^I^I^I^I^Iif^I^I^I1^I^I^I^Iargc^I^I^I^I^I^I^I^I^IstreamCopy^I^Istdin^I^Istdout^I^I^I^I^I^Ielse^Iif^I^I2^I^I^I^Iargc^I^I^I^I^I^I^IFILE^I^Ifptr1^I^I^I^I^I^Iif^Istrcmp^Iargv^I1^I^I^I^I^IT^I^I^I^I^I^I0^I^I^I^I^I^I^I^I^IalteraCharControlo^Istdin^I^Istdout^I^I^I^I^I^I^I^Ielse^Iif^Istrcmp^Iargv^I1^I^I^I^I^In^I^I^I^I^I^I0^I^I^I^I^I^I^I^I^ImostraNumLinha^Istdin^I^Istdout^I^I^I^I^I^I^I^Ielse^I^I^I^I^I^I^I^Ifptr1^I^I^Ifopen^Iargv^I1^I^I^I^Ir^I^I^I^I^I^I^I^I^I^Iif^I^Ifptr1^I^I^I^INULL^I^I^I^I^I^I^I^I^I^I^Iprintf^I^ICannot^Iopen^Ifile^I^Is^I^In^I^I^Iargv^I1^I^I^I^I^I^I^I^I^I^I^I^Iexit^I0^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^IstreamCopy^Ifptr1^I^Istdout^I^I^I^I^I^I^I^I^Ifclose^Ifptr1^I^I^I^I^I^I^I^I^I^I^I^Ielse^I^I^I^I^I^I^IFILE^I^Ifptr1^I^I^I^I^I^Iint^Istart^I1^I^I^I^I^I^Iif^Iargv^I1^I^I0^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Istart^I^I^I2^I^I^I^I^I^I^I^I^I^I^I^I^I^Ifor^Iint^Ii^Istart^I^Ii^I^Iargc^I^Ii^I^I^I^I^I^I^I^I^I^I^Ifptr1^I^I^Ifopen^Iargv^Ii^I^I^I^Ir^I^I^I^I^I^I^I^I^I^Iif^I^Ifptr1^I^I^I^INULL^I^I^I^I^I^I^I^I^I^I^Iprintf^I^ICannot^Iopen^Ifile^I^Is^I^In^I^I^Iargv^Ii^I^I^I^I^I^I^I^I^I^I^I^Iexit^I0^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Iif^Istart^I^I2^I^I^I^I^I^I^I^I^I^I^Iif^Istrcmp^Iargv^I1^I^I^I^I^IT^I^I^I^I^I^I0^I^I^I^I^I^I^I^I^I^I^I^IalteraCharControlo^Ifptr1^I^Istdout^I^I^I^I^I^I^I^I^I^I^Ielse^Iif^Istrcmp^Iargv^I1^I^I^I^I^In^I^I^I^I^I^I0^I^I^I^I^I^I^I^I^I^I^I^ImostraNumLinha^Ifptr1^I^Istdout^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Ielse^I^I^I^I^I^I^I^I^I^IstreamCopy^Ifptr1^I^Istdout^I^I^I^I^I^I^I^I^Ifclose^Ifptr1^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Ireturn^I0^I^I^I^I^I^Ivoid^IstreamCopy^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^I^I^Iint^Ich^I^I^I^Iwhile^I^I^I^Ich^Ifgetc^Ientrada^I^I^I^I^I^IEOF^I^I^I^I^Ifputc^I^Ich^I^Isaida^I^I^I^I^I^I^I^I^Ivoid^IalteraCharControlo^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^I^I^Iint^Ich^I^I^I^Iwhile^I^I^I^Ich^Ifgetc^Ientrada^I^I^I^I^I^IEOF^I^I^I^I^I^Iif^I^I^I^Ich^I^I^I^I^Ia^I^I^I^I^Ich^I^I^I^I^Iz^I^I^I^I^I^I^Ich^I^I^I^I^IA^I^I^I^I^Ich^I^I^I^I^IZ^I^I^I^I^I^I^I^Ich^I^I^I^I^I0^I^I^I^I^Ich^I^I^I^I^I9^I^I^I^I^I^I^I^I^Ifputc^Ich^I^Isaida^I^I^I^I^I^Ielse^I^I^I^I^I^Ifputs^I^I^II^I^I^Isaida^I^I^I^I^I^I^I^I^I^I^I^I^Ivoid^ImostraNumLinha^I^I^IFILE^I^I^Ientrada^I^IFILE^I^I^Isaida^I^I^I^I^Iint^Ich^I^I^I^Iint^Ilinha^I1^I^I^Ifpos^It^Iposition^I^I^Iprintf^I^I^I^I10d^I^I^I0^I^I^I^Iwhile^I^I^Ich^Ifgetc^Ientrada^I^I^I^I^I^IEOF^I^I^I^I^I^I^Iif^Ich^I^I^I^I10^I^I^I^I^I^I^I^Ifgetpos^Ientrada^I^I^Iposition^I^I^I^I^I^I^I^Iif^I^Ifgetc^Ientrada^I^I^I^I^I^IEOF^I^I^I^I^I^I^I^I^I^I^Ifprintf^Isaida^I^I^I^In^I^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Ielse^I^I^I^I^I^I^I^I^I^Ifprintf^Isaida^I^I^I^In^I^I10d^I^I^Ilinha^I^I^I^I^I^I^I^I^I^I^Ifsetpos^Ientrada^I^I^Iposition^I^I^I^I^I^I^I^I^I^I^I^I^I^I^Ilinha^I^I^I^I^I^I^I^I^I^I^I^Ielse^I^I^I^I^Ifputc^I^Ich^I^Isaida^I^I^I^I^I^I^I
+
+Teste8:
+0         teste do -n
+1         nova linha
+2         teste
+
+Teste9:
+0         1:lima:236 
+1         4:maranja:355 
+2         8:maca:370 
+3         12:uva:5400 
+4         13:limão:350
+0         #include <stdio.h>
+1         #include <stdlib.h>
+2         
+3         void streamCopy ( FILE * entrada, FILE * saida);
+4         void alteraCharControlo ( FILE * entrada, FILE * saida );
+5         void mostraNumLinha ( FILE * entrada, FILE * saida );
+6         
+7         int main( int argc, char *argv[] ){
+8           if ( 1 == argc ){ 
+9             streamCopy (stdin, stdout);
+10          }else if (2 == argc){
+11            FILE *fptr1;
+12            if(strcmp(argv[1], "-T") == 0){
+13              alteraCharControlo(stdin, stdout);
+14            }else if(strcmp(argv[1], "-n") == 0){
+15              mostraNumLinha(stdin, stdout);
+16            }else{
+17              fptr1 = fopen(argv[1], "r");
+18              if (fptr1 == NULL){
+19                printf("Cannot open file %s \n", argv[1]);
+20                exit(0);
+21              }
+22              streamCopy(fptr1, stdout);
+23              fclose(fptr1);
+24            }
+25          }else {
+26            FILE *fptr1;
+27            int start=1;
+28            if(argv[1][0] == '-'){
+29              start = 2; 
+30            }
+31        
+32            for(int i=start; i< argc; i++){
+33              fptr1 = fopen(argv[i], "r");
+34              if (fptr1 == NULL){
+35                printf("Cannot open file %s \n", argv[i]);
+36                exit(0);
+37              }
+38        
+39              if(start==2){
+40                if(strcmp(argv[1], "-T") == 0)
+41                  alteraCharControlo(fptr1, stdout);
+42                else if(strcmp(argv[1], "-n") == 0)
+43                  mostraNumLinha(fptr1, stdout);
+44              }
+45              else{
+46                streamCopy(fptr1, stdout);
+47              fclose(fptr1);
+48              }
+49            }
+50          }
+51        
+52         return 0;
+53        }
+54        
+55        
+56        void streamCopy ( FILE * entrada, FILE * saida ){
+57         int ch; 
+58         while ( (ch=fgetc(entrada)) != EOF ){
+59         fputc( ch, saida);
+60         }
+61        }
+62        
+63        void alteraCharControlo ( FILE * entrada, FILE * saida ){
+64         int ch; 
+65         while ( (ch=fgetc(entrada)) != EOF ){
+66          if( ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) || (ch >= '0' && ch <= '9')){
+67            fputc(ch, saida);
+68          }else{
+69            fputs("^I", saida);
+70          }
+71         }
+72        }
+73        
+74        void mostraNumLinha ( FILE * entrada, FILE * saida ){
+75         int ch; 
+76         int linha=1;
+77         fpos_t position;
+78         printf("%-10d", 0);
+79         while ((ch=fgetc(entrada)) != EOF ){
+80           if(ch == 10){
+81             fgetpos(entrada, &position);
+82             if((fgetc(entrada)) == EOF ){
+83               fprintf(saida, "\n");
+84             }
+85             else{
+86                fprintf(saida, "\n%-10d", linha);
+87                fsetpos(entrada, &position);
+88             }
+89             linha++;
+90           }
+91           else
+92            fputc( ch, saida);
+93         }
+94        }
