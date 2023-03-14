@@ -10,7 +10,7 @@ size=4096
 tmpFile=$(mktemp) 
 while [ $size -gt 1 ]; do 
    echo $size 
-   solowlevelcp $bigFile  $tmpFile   $size  
+   ./solowlevelcp $bigFile  $tmpFile   $size  
    rm $tmpFile 
    let size=size/4 
 done
