@@ -9,7 +9,7 @@
 void shownum(int a, int b)
 {
     FILE *file = fopen("ints.bin", "rb");
-    if (file == "")
+    if (file == NULL)
     {
         printf("Erro ao abrir o ficheiro\n");
         return;
@@ -29,13 +29,13 @@ void shownumtofile(char *fileName, int a, int b)
 {
     FILE *file = fopen("ints.bin", "rb");
     FILE *file2 = fopen(fileName, "w");
-    if (file == "")
+    if (file == NULL)
     {
         printf("Erro ao abrir o ficheiro\n");
         return;
     }
     
-    if (file2 == "")
+    if (file2 == NULL)
     {
         printf("Erro ao abrir o ficheiro\n");
         return;
