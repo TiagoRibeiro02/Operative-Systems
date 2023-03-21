@@ -6,6 +6,53 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+void shownum(int a, int b)
+{
+    FILE *file = fopen("ints.bin", "rb");
+    if (file == "")
+    {
+        printf("Erro ao abrir o ficheiro\n");
+        return;
+    }
+    int nums[100];
+    fread(nums, sizeof(int), 100, file);
+    fclose(file);
+    printf("Números no intervalo [%d, %d]:\n", a, b);
+    for (int i = a; i <= b; i++)
+    {
+        printf("%d ", nums[i]);
+    }
+    printf("\n");
+    fclose(file);
+}
+
+void shownumtofile(char *fileName[], int a, int b)
+{
+    FILE *file = fopen("ints.bin", "rb");
+    FILE *file2 = fopen(fileName, "w");
+    if (file == "")
+    {
+        printf("Erro ao abrir o ficheiro\n");
+        return;
+    }
+    
+    if (file2 == "")
+    {
+        printf("Erro ao abrir o ficheiro\n");
+        return;
+    }
+    int nums[100];
+    fread(nums, sizeof(int), 100, file);
+    fclose(file);
+    printf("Números no intervalo [%d, %d]:\n", a, b);
+    for (int i = a; i <= b; i++)
+    {
+        write(file2, nums[i], 100*sizeof(int) );
+    }
+    fclose(file2);
+    fclose(file);
+}
+
 int main()
 {
 
@@ -25,28 +72,15 @@ int main()
         }
         else if (strcmp(s1, "NG") == 0)
         {
-            if (s2 == NULL)
+            if (strcmp(s2, "") == 0)
             {
-                printf("Protocolo desconhecido\n");
+                shownum(a,b);
                 continue;
             }
             else
             {
-                FILE *file = fopen(s2, "rb");
-                if (file == "")
-                {
-                    printf("Erro ao abrir o ficheiro\n");
-                    return;
-                }
-                int nums[100];
-                fread(nums, sizeof(int), 100, file);
-                fclose(file);
-                printf("Números no intervalo [%d, %d]:\n", a, b);
-                for (int i = a; i <= b; i++)
-                {
-                    printf("%d ", nums[i]);
-                }
-                printf("\n");
+                shownumtofile(s2,a,b);
+                continue;
             }
         }
         else if (strcmp(s1, "NE") == 0)
