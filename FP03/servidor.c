@@ -16,8 +16,9 @@ int main()
     printf("%s %d %d %s\n", s1, a, b, s2);
 
     int pid;
-    if (s1 == "NG")
+    if (strcmp(s1, "NG"))
     {
+        printf("aaaa");
         pid = fork();
         if (0 == pid)
         {
