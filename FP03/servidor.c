@@ -23,10 +23,9 @@ void shownum(int a, int b)
         printf("%d ", nums[i]);
     }
     printf("\n");
-    fclose(file);
 }
 
-void shownumtofile(char *fileName[], int a, int b)
+void shownumtofile(char *fileName, int a, int b)
 {
     FILE *file = fopen("ints.bin", "rb");
     FILE *file2 = fopen(fileName, "w");
@@ -44,13 +43,13 @@ void shownumtofile(char *fileName[], int a, int b)
     int nums[100];
     fread(nums, sizeof(int), 100, file);
     fclose(file);
-    printf("Números no intervalo [%d, %d]:\n", a, b);
+    printf("Números no intervalo [%d, %d] foram guardados\n", a, b);
     for (int i = a; i <= b; i++)
     {
-        write(file2, nums[i], 100*sizeof(int) );
+        fwrite(&nums[i], sizeof(int), 1, file2);
     }
     fclose(file2);
-    fclose(file);
+    
 }
 
 int main()
@@ -86,40 +85,21 @@ int main()
         else if (strcmp(s1, "NE") == 0)
         {
             int pid = fork();
-            if (pid < 0)
-            {
-                printf("Erro ao criar processo filho\n");
-                return;
-            }
             if (pid == 0)
-            { // processo filho
-                if (s2 == NULL)
+            {
+                if (strcmp(s2, "") == 0)
                 {
-                    printf("Protocolo desconhecido\n");
-                    continue;
+                    shownum(a,b);
+                    break;
                 }
                 else
                 {
-                    FILE *file = fopen(s2, "rb");
-                    if (file == NULL)
-                    {
-                        printf("Erro ao abrir o ficheiro\n");
-                        return;
-                    }
-                    int nums[100];
-                    fread(nums, sizeof(int), 100, file);
-                    fclose(file);
-                    printf("Números no intervalo [%d, %d]:\n", a, b);
-                    for (int i = a; i <= b; i++)
-                    {
-                        printf("%d ", nums[i]);
-                    }
-                    printf("\n");
+                    shownumtofile(s2,a,b);
                     break;
                 }
             }
             else
-            { // processo pai
+            {
                 wait(NULL);
             }
         }
