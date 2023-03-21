@@ -15,6 +15,11 @@ int main()
     sscanf(linha, "%s %d %d %s", s1, &a, &b, s2);
     printf("%s %d %d %s\n", s1, a, b, s2);
 
+    if (a == 0)
+    {
+        printf("ola");
+    }
+    
     int pid;
     if (strcmp(s1, "NG"))
     {
