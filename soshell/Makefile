@@ -21,6 +21,8 @@ execute.o : shell.h execute.c
 	$(CC) $(FLAGS) execute.c
 calc.o : shell.h calc.c
 	$(CC) $(FLAGS) calc.c
+imageType.o : shell.h imageType.c
+	$(CC) $(FLAGS) imageType.c
 parse.o : shell.h parse.c
 	$(CC) $(FLAGS) parse.c
 socp.o : shell.h socp.c

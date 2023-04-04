@@ -75,6 +75,21 @@ int builtin (char **args)
     bits(args[1], args[2], args[3]);
     return 1; //comando embutido
   }
+  if (0==strcmp(args[0], "isjpeg")){
+    int fd = open(args[1], O_RDONLY, 0);
+    if (fd < 0){
+      printf("File does not exist");
+    }
+    else{
+      if(isjpeg(fd)){
+        printf("%s its a JPEG\n", args[1]);
+      }
+      else{
+        printf("%s its not a JPEG\n", args[1]);
+      }
+    }
+    return 1; //comando embutido
+  }
   
   
 

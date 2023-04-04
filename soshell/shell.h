@@ -13,6 +13,8 @@ void calc(char *value1, char *op, char *value2);
 
 void bits(char *op1, char *op, char *op2);
 
+int isjpeg(int fileDescriptor);
+
 void parse(char *buf, char **args);
 
 void execute(char **args);
