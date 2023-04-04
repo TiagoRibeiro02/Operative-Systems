@@ -1,5 +1,5 @@
 /*
-   execute . cria um processo progénito e executa um programa
+   execute . cria um processo progï¿½nito e executa um programa
 */
 #include "shell.h"
 

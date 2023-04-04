@@ -15,6 +15,8 @@ void execute(char **args);
 
 int builtin (char **args);
 
+void calc(char *value1, char *op, char*value2);
+
 /* constantes que podem tornar uteis*/
 
 #define BG 0
