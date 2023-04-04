@@ -10,7 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm
-OBS=main.o execute.o parse.o socp.o calc.o
+OBS=main.o execute.o parse.o socp.o calc.o imageType.o
 
 #Alvo por defeito é o primeiro
 all :  soshell
