@@ -63,10 +63,20 @@ int builtin (char **args)
   if (err<0) perror ( args[1]);
     return 1 ; //comando embutido
   }
-  if( 0==strcmp(args[0], "socp") ){
+  if(0==strcmp(args[0], "socp") ){
     socp( args[1], args[2] );
     return 1 ; //comando embutido
   }
+  if (0==strcmp(args[0], "calc")){
+    calc(args[1], args[2], args[3]);
+    return 1; //comando embutido
+  }
+  if (0==strcmp(args[0], "bits")){
+    bits(args[1], args[2], args[3]);
+    return 1; //comando embutido
+  }
+  
+  
 
 
 

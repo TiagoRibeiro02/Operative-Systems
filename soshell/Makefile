@@ -10,7 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm
-OBS=main.o execute.o parse.o socp.o
+OBS=main.o execute.o parse.o socp.o calc.o
 
 #Alvo por defeito é o primeiro
 all :  soshell
@@ -19,6 +19,8 @@ main.o : shell.h main.c
 	$(CC) $(FLAGS) main.c
 execute.o : shell.h execute.c
 	$(CC) $(FLAGS) execute.c
+calc.o : shell.h calc.c
+	$(CC) $(FLAGS) calc.c
 parse.o : shell.h parse.c
 	$(CC) $(FLAGS) parse.c
 socp.o : shell.h socp.c
