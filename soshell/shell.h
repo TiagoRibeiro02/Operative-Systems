@@ -15,11 +15,11 @@ void bits(char *op1, char *op, char *op2);
 
 int isjpeg(int fileDescriptor);
 
-void parse(char *buf, char **args);
+int parse(char *buf, char **args);
 
-void execute(char **args);
+void execute(int numargs, char **args);
 
-int builtin (char **args);
+int builtin (char **args, int numargs);
 
 
 /* constantes que podem tornar uteis*/

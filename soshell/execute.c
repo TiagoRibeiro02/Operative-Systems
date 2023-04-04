@@ -3,7 +3,8 @@
 */
 #include "shell.h"
 
-void execute (char **args)
+
+void execute (int numargs, char **args)
 {
   int pid, status;
 
