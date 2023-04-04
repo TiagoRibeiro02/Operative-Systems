@@ -19,7 +19,7 @@ main.o : shell.h main.c
 	$(CC) $(FLAGS) main.c
 execute.o : shell.h execute.c
 	$(CC) $(FLAGS) execute.c
-calc.o : shall.h calc.calc
+calc.o : shell.h calc.c
 	$(CC) $(FLAGS) calc.c
 parse.o : shell.h parse.c
 	$(CC) $(FLAGS) parse.c

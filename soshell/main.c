@@ -71,6 +71,11 @@ int builtin (char **args)
     calc(args[1], args[2], args[3]);
     return 1; //comando embutido
   }
+  if (0==strcmp(args[0], "bits")){
+    bits(args[1], args[2], args[3]);
+    return 1; //comando embutido
+  }
+  
   
 
 
