@@ -9,13 +9,14 @@
 #include <ctype.h>
 #include <wait.h>
 
+void calc(char *value1, char *op, char*value2);
+
 void parse(char *buf, char **args);
 
 void execute(char **args);
 
 int builtin (char **args);
 
-void calc(char *value1, char *op, char*value2);
 
 /* constantes que podem tornar uteis*/
 
