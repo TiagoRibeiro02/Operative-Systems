@@ -19,4 +19,25 @@ int main(int argc, char *argv[])
     char buffer[BUFFER_SIZE];
     int buffer_size = 0;
 
+    case 'i': {
+                // ir para o inicio do ficheiro e avançar n bytes
+                int offset = lseek(fd, n, SEEK_SET);
+                if (offset == -1) {
+                    write(STDOUT_FILENO, "Error\n");
+                    close(fd);
+                    return 1;
+                }
+                break;
+            }
+    case 'f': {
+                // ir para o fim do ficheiro e recuar n bytes
+                int offset = lseek(fd, -n, SEEK_END);
+                if (offset == -1) {
+                    write(STDOUT_FILENO, "Error\n");
+                    close(fd);
+                    return 1;
+                }
+                break;
+            }
+
 }
