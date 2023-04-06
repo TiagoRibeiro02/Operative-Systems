@@ -3,6 +3,18 @@
 
 #define BUFFER_SIZE 101
 
+int andvancefromi(int *file, int n)
+{
+    int offset = lseek(file, n, SEEK_SET);
+    return offset;
+}
+
+int returnfromf(int *file, int n)
+{
+    int offset = lseek(file, -n, SEEK_END);
+    return offset;
+}
+
 int main(int argc, char *argv[])
 {
     if (argc != 2) {
@@ -15,29 +27,5 @@ int main(int argc, char *argv[])
         write(STDOUT_FILENO, "Error opening file\n");
         return 1;
     }
-
-    char buffer[BUFFER_SIZE];
-    int buffer_size = 0;
-
-    case 'i': {
-                // ir para o inicio do ficheiro e avançar n bytes
-                int offset = lseek(fd, n, SEEK_SET);
-                if (offset == -1) {
-                    write(STDOUT_FILENO, "Error\n");
-                    close(fd);
-                    return 1;
-                }
-                break;
-            }
-    case 'f': {
-                // ir para o fim do ficheiro e recuar n bytes
-                int offset = lseek(fd, -n, SEEK_END);
-                if (offset == -1) {
-                    write(STDOUT_FILENO, "Error\n");
-                    close(fd);
-                    return 1;
-                }
-                break;
-            }
 
 }
