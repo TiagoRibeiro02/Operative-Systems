@@ -6,7 +6,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BUFFER_SIZE 101
+#define BUFFER_SIZE 100
+
+int andvancefromi(int *file, int n);
+int returnfromf(int *file, int n);
+int recuar(int *enderecoDoFile, int numeroDeBytesARecuar);
+char * ler(char *buffer, int *file ,int numeroDeCaracteresAApender);
+void vaciarobuff(char *buffer);
+int advance(int *file, int numberOfCharsToAdvance);
 
 int andvancefromi(int *file, int n)
 {
@@ -20,18 +27,18 @@ int returnfromf(int *file, int n)
     return offset;
 }
 
-int recuar(int * endereçoDoFile, int numeroDeBytesARecuar){
+int recuar(int *enderecoDoFile, int numeroDeBytesARecuar){
 
     numeroDeBytesARecuar = 0 - numeroDeBytesARecuar;
 
-    int offset=lseek(* endereçoDoFile, numeroDeBytesARecuar, SEEK_CUR);
+    int offset=lseek(*enderecoDoFile, numeroDeBytesARecuar, SEEK_CUR);
 
     return offset;
 
 }
 
-char *  ler(char * buffer, int * file ,int numeroDeCaracteresAApender){
-    char * apender = malloc(sizeof(char) *  (numeroDeCaracteresAApender +1));
+char * ler(char *buffer, int *file ,int numeroDeCaracteresAApender){
+    char * apender = malloc(sizeof(char) * (numeroDeCaracteresAApender +1));
     int n;
      n = read (*file, apender,sizeof(char)  * numeroDeCaracteresAApender  );
     
@@ -72,7 +79,8 @@ int main(int argc, char *argv[])
     char input[6];
     char * buffer= malloc(BUFFER_SIZE);
     input[0] = '\0';
-    int tamanhoDoBuffer=0;
+    const char novalinha='\n';
+    int tamanhoDoBuffer= 0;
     while(strcmp("s 0", input) != 0)
     {
         scanf(" %[^\n]",input);
@@ -85,6 +93,7 @@ int main(int argc, char *argv[])
         if(input[0] == '+')
         {
             advance(&fd , numBytes);
+            
         }
         else if (input[0] == '-')
         {
@@ -93,6 +102,7 @@ int main(int argc, char *argv[])
         else if (input[0] == 'i')
         {
             andvancefromi(&fd, numBytes);
+            
         }
         else if (input[0] == 'f')
         {
@@ -100,14 +110,15 @@ int main(int argc, char *argv[])
         }
         else if (input[0] == 'r')
         {
-            char * returnStr;
-            returnStr= strcpy(buffer, ler(buffer,&fd,numBytes) ); 
+            
+            strcpy(buffer, ler(buffer,&fd,numBytes) ); 
             tamanhoDoBuffer+= numBytes;
+            
         }
         else if (input[0] == 'l' && input[2] == '0')
         {
             vaciarobuff(buffer);
-            tamanhoDoBuffer=0;
+            tamanhoDoBuffer= 0;
         }
         else{
             break;
@@ -115,6 +126,7 @@ int main(int argc, char *argv[])
     }
     
     write(STDOUT_FILENO, buffer,tamanhoDoBuffer);
+    write(STDOUT_FILENO, &novalinha,1 );
     free(buffer);
     
     close(fd);
