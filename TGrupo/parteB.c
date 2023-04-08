@@ -46,7 +46,7 @@ char* generate_instruction(char *instruction, int *n_pass) {
     }
     if (n!=0)
     {
-        printf("%s\n" instruction);
+        printf("%s\n", instruction);
 
     }
     
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
             fseek(binary_file, -param, SEEK_END);
         }
         else if (instruction[0] == 'r') {
-            fwrite(buffer + buffer_pos, 1, param, binary_file);
+            fwrite(string[buffer + buffer_pos], 1, param, binary_file);
             buffer_pos += param;
         }
 
