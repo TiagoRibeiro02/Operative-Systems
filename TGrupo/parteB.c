@@ -44,6 +44,12 @@ char* generate_instruction(char *instruction, int *n_pass) {
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
     }
+    if (n!=0)
+    {
+        printf("%s\n" instruction);
+
+    }
+    
 
     return instruction;
 }
@@ -54,7 +60,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    FILE* binary_file = fopen(argv[1], "rb");
+    FILE* binary_file = fopen(argv[1], "wb");
     if (binary_file == NULL) {
         printf("Error opening file\n");
         return 1;
@@ -86,7 +92,7 @@ int main(int argc, char* argv[]) {
             fseek(binary_file, -param, SEEK_END);
         }
         else if (instruction[0] == 'r') {
-            fread(buffer + buffer_pos, 1, param, binary_file);
+            fwrite(buffer + buffer_pos, 1, param, binary_file);
             buffer_pos += param;
         }
 
@@ -97,7 +103,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    printf("r %d\n", string_len);
+    //printf("r %d\n", string_len);
     fread(buffer + buffer_pos, 1, string_len, binary_file);
 
     fclose(binary_file);
