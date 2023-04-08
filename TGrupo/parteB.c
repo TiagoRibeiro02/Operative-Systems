@@ -7,8 +7,8 @@
 #define MAX_BUFFER_SIZE 1000 // Tamanho máximo do buffer
 
 // Função que gera uma instrução aleatória
-char* generate_instruction(char* instruction, int* param) {
-    char* inst = malloc(MAX_INSTR_LENGTH * sizeof(char));
+char* generate_instruction(char *instruction, int *n_pass) {
+    char *inst = malloc(MAX_INSTR_LENGTH * sizeof(char));
     int n;
 
     switch(rand() % 5) {
@@ -32,17 +32,17 @@ char* generate_instruction(char* instruction, int* param) {
     if (inst[0] == '+' || inst[0] == '-') {
         n = rand() % 10 + 1;
         sprintf(instruction, "%s %d", inst, n);
-        *param = n;
+        *n_pass = n;
     }
     else if (inst[0] == 'i' || inst[0] == 'f') {
         n = rand() % 10 + 1;
         sprintf(instruction, "%s %d", inst, n);
-        *param = n;
+        *n_pass = n;
     }
     else if (inst[0] == 'r') {
-        n = rand() % 20 + 1;
+        n = rand() % 10 + 1;
         sprintf(instruction, "%s %d", inst, n);
-        *param = n;
+        *n_pass = n;
     }
 
     return instruction;
@@ -50,13 +50,13 @@ char* generate_instruction(char* instruction, int* param) {
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-        printf("Usage: ./program <binary_file> <string>\n");
+        printf("Binary file and message requiered\n");
         return 1;
     }
 
     FILE* binary_file = fopen(argv[1], "rb");
     if (binary_file == NULL) {
-        printf("Error: failed to open binary file.\n");
+        printf("Error opening file\n");
         return 1;
     }
 
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
         }
 
         if (buffer_pos >= MAX_BUFFER_SIZE - string_len) {
-            printf("l 0\n");
+            printf("s 0\n");
             memset(buffer, 0, MAX_BUFFER_SIZE);
             buffer_pos = 0;
         }
