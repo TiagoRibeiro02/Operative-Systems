@@ -4,15 +4,28 @@
 #include <time.h>
 
 #define MAX_INSTR_LENGTH 6 // Tamanho máximo de uma instrução
- // Tamanho máximo do buffer
 
-// Função que gera uma instrução aleatória
+/* 
+   Função que gera uma instrução aleatória
+   A função tem 9 parâmetros importantes, os dois primeiros são feitos para o retorno da função que detém o "operador" e o "número de movimento". 
+   (*n_pass retorna alterando a variável principal), estas duas variáveis com "binaryl" fazem quase todos os casos.
+   Assim, a primeira parte da função começa com o "switch" que selecciona aleatoriamente o operador, depois cada caso deve ter uma condição que verifique que após a realização da operação não excedemos o tamanho do ficheiro, 
+   pelo que todos os se devem ter o "binaril" em comparação com a posição actual "actualposition"   então o programa guardará toda a informação se passar as condições e voltar ao principal.
+
+   Se o operador escolhido for "r", então realizará a comparação explicada acima, juntamente com uma comparação que verifica que o tamanho da string é maior do que o buffer.
+   Depois, sempre que o tamanho da cadeia de caracteres e o tamanho do buffer não forem iguais, e também quando a posição actual estiver no fim do ficheiro, será criado um novo número aleatório que terá um intervalo entre um e 
+   o menor de (tamanho do ficheiro - posição actual) e (tamanho do fio - tamanho do buffer). -> (1 - o mais pequeno)
+
+   A última parte compara se a variável "sample" (que faz uma leitura de n elementos do ficheiro) e o "comparator" (que faz uma cópia de n elementos da palavra a pesquisar), são iguais, caso sejam, salvá-los-á no buffer, caso contrário voltará ao início.
+
+   Toda a função tem um do- while necessário para repetir todo o algoritmo até encontrar um operador e um número que possa passar os condicionantes.
+
+*/
 char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int tamDaStringARevelar ,FILE * position  ,int binaryl, int actualposition, char * stringAProcurar , int *posicaoDaString) {
+    
     char *inst = malloc(MAX_INSTR_LENGTH * sizeof(char));
     int n = 0, sum= 0, choice;
-    // printf("Size of string: %d\n",tamDaStringARevelar);
-    //printf("Size of buffer: %d\n",tamDoBuffer);
-    
+
     do{
     switch(choice=rand() % 5) {
         case 0:
@@ -32,19 +45,14 @@ char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int
             break;
     }
 
-    //printf("%dº Choice\n",choice);   
 
     if (inst[0] == '+' && binaryl >= actualposition + n) {
-        //puts("Debug1");
+
         if(binaryl - actualposition!=0){
             n= rand() % (binaryl - actualposition) +1;
         }
-        else{
-            continue;
-        }
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
-        if(binaryl >= actualposition + n)
         sum = 1;
     }
 
@@ -53,7 +61,6 @@ char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int
         n= rand() % actualposition + 1 ;
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
-        if((actualposition-n) >= 1)
         sum = 1;
     }
 
@@ -61,7 +68,6 @@ char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int
         n= rand() % binaryl +1 ;
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
-        if(binaryl >= n)
         sum = 1;
     }
     
@@ -70,29 +76,25 @@ char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int
         n= rand()  % binaryl +1;
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
-        if(n <= binaryl)
         sum = 1;
     }
     else if ((inst[0] == 'r') && (binaryl >= actualposition + n) && (tamDaStringARevelar > tamDoBuffer)) {
-        //puts("Debug2");
+
         if((binaryl - actualposition !=0) && (tamDaStringARevelar -tamDoBuffer != 0)){
             n= rand() % (((binaryl - actualposition)< (tamDaStringARevelar -tamDoBuffer)) ? (binaryl -actualposition) : (tamDaStringARevelar - tamDoBuffer)) +1;
         }
-        else{
-            continue;
-        }
+
         sprintf(instruction, "%s %d", inst, n);
         *n_pass = n;
-        //////se fizermos isto isto é este else if der o objetivo então terminamosé tudo 
 
         char *sample =malloc( sizeof(char) *  (n+1));
         fread(sample,1,n,position);
         sample[n] = '\0';
+        
         char *comparator = malloc(sizeof(char) * (n+1));
         strncpy(comparator,stringAProcurar,n);  
         comparator[n] = '\0';
-        //printf("Sample:%s\n",sample);
-        //printf("Comparator:%s\n",comparator);      
+    
         if(n +actualposition <= binaryl && (n<= (tamDaStringARevelar -tamDoBuffer)) && strcmp(comparator , sample) == 0){
         sum = 1;
         *posicaoDaString += n; 
@@ -112,6 +114,13 @@ char* generate_instruction(char *instruction, int *n_pass , int tamDoBuffer, int
     return instruction;
 }
 
+/* 
+    A função main tem como objetivo só alocar as variaveis que temos que utilizaremos na função generate_instructions, e ejecutar os operadores e os numeros que esta função retorna 
+    No inicio temos comparadores que comprueban si o fichero existe ou si foi possivel abri-lo, depois de alocar a variaveis necesarias comenzamos um ciclo while
+    que ejecutara os operadores llamando a funcao generate_instructions e dependiendo do resultado as condicionais fazeram as operacoes,
+    o comando "read" tem operacoes especiais que so fazem o guardado no buffer dos caracteres leidos, utilizando primero o read em uma string "apender" para depois copiar toda a informacao no buffer
+*/
+
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         printf("Binary file and message requiered\n");
@@ -125,7 +134,6 @@ int main(int argc, char* argv[]) {
     }
 
     char* string = argv[2];
-    strtok(string, "\n");
     int string_len = strlen(string);
     fseek(binary_file,0l,SEEK_END);
     int binarylength = ftell(binary_file);
@@ -143,7 +151,7 @@ int main(int argc, char* argv[]) {
 
     while (strlen(buffer) < string_len) {
         
-        generate_instruction(instruction, &param, strlen(buffer) , strlen(string), binary_file, binarylength, ftell(binary_file), &(string[posicaoNaString]), &posicaoNaString );
+        generate_instruction(instruction, &param, strlen(buffer) , string_len, binary_file, binarylength, ftell(binary_file), &(string[posicaoNaString]), &posicaoNaString );
 
         if (instruction[0] == '+' && param != 0) {
             fseek(binary_file, param, SEEK_CUR);
@@ -158,12 +166,10 @@ int main(int argc, char* argv[]) {
             fseek(binary_file, -param, SEEK_END);
         }
         else if (instruction[0] == 'r' && param != 0) {
-            /*fread(buffer + buffer_pos, 1, param, binary_file);
-            buffer_pos += param;*/
             
             char * apender = malloc(sizeof(char) *  (param +1));
             
-            fread (apender, 1, param ,binary_file );
+            fread (buffer, 1, param ,binary_file );
             apender[param] = '\0';
             
             strcat(buffer,apender);
@@ -182,6 +188,5 @@ int main(int argc, char* argv[]) {
     free(buffer);
     fclose(binary_file);
     printf("s 0\n");
-    //printf("%s\n",buffer);
     return 0;
 }
