@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (found != string_len) {
-        printf("Error: string not found in binary file.\n");
+        printf("String not found in binary file.\n");
         return 1;
     }
 
