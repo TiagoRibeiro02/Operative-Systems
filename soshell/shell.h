@@ -21,6 +21,8 @@ void execute(int numargs, char **args);
 
 int builtin (char **args, int numargs);
 
+int redirects(int numargs, char *args[]);
+
 
 /* constantes que podem tornar uteis*/
 
