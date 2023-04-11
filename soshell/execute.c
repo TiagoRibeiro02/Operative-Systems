@@ -17,6 +17,7 @@ void execute (int numargs, char **args)
 
   if (pid == 0)
     {
+      redirects(numargs, args);
       execvp (*args, args);/* NOTE: as versoes execv() e
                             * execvp() de execl() sao uteis quando */
       perror (*args);      /* o numero de argumentos nao e. conhecido.
