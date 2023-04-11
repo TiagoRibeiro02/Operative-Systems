@@ -151,9 +151,6 @@ int main(int argc, char* argv[]) {
                 break;
             }
         }
-        else {
-            found = 0;
-        }
     }
 
     if (found != string_len) {
