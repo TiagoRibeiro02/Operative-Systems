@@ -3,7 +3,6 @@
 #define FILE_MODE (S_IRUSR | S_IWUSR)
 
 // redirects.c
-//alterar o execute
 
 // redirects tratamento dos simbolos por ordem inversa: i) 2> ii) > OU > iii) <
 
