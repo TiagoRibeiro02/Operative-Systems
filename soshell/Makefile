@@ -9,7 +9,7 @@
 #
 CC=cc
 FLAGS=-c -Wall
-LIBS=-lm
+LIBS=-lm -lpthread
 OBS=main.o execute.o parse.o socp.o calc.o imageType.o redirects.o aviso.o
 
 #Alvo por defeito é o primeiro
