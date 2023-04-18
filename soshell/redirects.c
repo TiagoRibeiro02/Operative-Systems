@@ -9,6 +9,7 @@
 int redirects(int numargs, char *args[])
 {
     // i tratar do redirect do 2>
+    
     if (numargs < 3){
         return numargs; // Guard the following section
     }
