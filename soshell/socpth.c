@@ -3,4 +3,6 @@
 #include <unistd.h>
 #include "shell.h"
 
-void *
+void *socpwrapper(void *args){
+    
+}
