@@ -29,6 +29,8 @@ int main(){
     pipe1[1] = open(FIFO1, 1);
     pipe2[0] = open(FIFO2, 0);
 
+    //ola teste
+
     client();
 }
 
