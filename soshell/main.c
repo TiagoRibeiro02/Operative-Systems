@@ -90,6 +90,16 @@ int builtin (char **args, int numargs)
     }
     return 1; //comando embutido
   }
+  if (strcmp(args[0], "aviso") == 0)
+  {
+    pthread_t th;
+    aviso_t *ptr = (aviso_t *)malloc(sizeof(aviso_t));
+    strcpy(ptr->msg, args[1]);
+    ptr->tempo = atoi(args[2]);
+    pthread_create(&th, NULL, avisowrapper, (void *)ptr);
+    return 1;
+  }
+  
   
   
 

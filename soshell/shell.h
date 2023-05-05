@@ -21,8 +21,16 @@ void execute(int numargs, char **args);
 
 int builtin (char **args, int numargs);
 
+int redirects(int numargs, char *args[]);
+
+void aviso(char *mesg, int tempo);
+
+void *avisowrapper(void *args);
+
 
 /* constantes que podem tornar uteis*/
 
 #define BG 0
 #define FG 1
+
+ typedef struct { char msg[100] ; int tempo;} aviso_t;
