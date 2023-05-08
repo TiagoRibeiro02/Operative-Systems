@@ -27,6 +27,10 @@ void aviso(char *mesg, int tempo);
 
 void *avisowrapper(void *args);
 
+void *socpwrapper(void *args);
+
+void socp(char *fonte, char *destino);
+
 
 /* constantes que podem tornar uteis*/
 
@@ -34,3 +38,10 @@ void *avisowrapper(void *args);
 #define FG 1
 
  typedef struct { char msg[100] ; int tempo;} aviso_t;
+
+ typedef struct
+ {
+    char fonte[100];
+    char destino[100];
+ }copiar_t;
+ 
