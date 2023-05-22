@@ -10,6 +10,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #define NUM_THREADS 10
+#define __mb__ asm volatile ("mfence":::"memory");
 
 pthread_mutex_t th;
 sem_t s;
@@ -17,11 +18,21 @@ sem_t s;
 volatile int bilDisp = 45522;
 volatile int vendas[10] = {0};
 
-volatile int vez[NUM_THREADS];
-volatile int interessado[NUM_THREADS];
+volatile int level[10]= {-1};
+volatile int last_to_enter[10]= {-1};
 
 int semente;
 int metodo;
+
+int exists(int id, int j){
+    int k, flag=0;
+    for (k = 0; k < NUM_THREADS; k++)
+    {
+        if (k==id) continue;
+        if (level[k] >= j) return 1;    
+    }
+    return 0;
+}
 
 
 
@@ -39,24 +50,19 @@ void *funcao4(void *args)
         }
 
         numVendidos_na_Thread += b;
-
-        // Início da seção crítica
-        interessado[id] = 1;
-        vez[id] = 1;
-        for (int j = 0; j < NUM_THREADS; j++) {
+            
+        for (int j = 0; j < NUM_THREADS -1; j++) {
             if (j != id) {
-                vez[id] = j;
-                while (interessado[j] && vez[id] == j)
-                    ; // Espera ocupada
+                level[id] = j;          __mb__
+                last_to_enter[j] = id;  __mb__
+                while (last_to_enter[j] && exists(id,j)); 
             }
         }
 
-        // Seção crítica
         bilDisp -= b;
         vendas[id] += b;
 
-        interessado[id] = 0;
-        // Fim da seção crítica
+        level[id] = -1;
     }
 
     pthread_exit(NULL);
@@ -100,8 +106,8 @@ void peterson()
 
     for (int i = 0; i < NUM_THREADS; i++) {
         ids[i] = i;
-        interessado[i] = 0;
-        vez[i] = 0;
+        //last_to_enter[i] = 0;
+        //level[i] = 0;
     }
 
     for (int i = 0; i < NUM_THREADS; i++) {
