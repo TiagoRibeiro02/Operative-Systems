@@ -18,8 +18,8 @@ sem_t s;
 volatile int bilDisp = 45522;
 volatile int vendas[10] = {0};
 
-volatile int level[10]= {-1};
-volatile int last_to_enter[10]= {-1};
+volatile int level[NUM_THREADS]= {-1};
+volatile int last_to_enter[NUM_THREADS]= {-1};
 
 int semente;
 int metodo;
@@ -41,31 +41,32 @@ void *funcao4(void *args)
     int id = *(int *)args;
     srand(semente + id);
     int numVendidos_na_Thread = 0;
+    int b = 1 + rand() % 4;
 
-    while (numVendidos_na_Thread < 1500) {
-        int b = 1 + rand() % 4;
+    while (1) {
 
-        if (numVendidos_na_Thread + b > 1500) {
+        /*if (numVendidos_na_Thread + b > 1500) {
             b = 1500 - numVendidos_na_Thread;
-        }
+        }*/
 
-        numVendidos_na_Thread += b;
+        //numVendidos_na_Thread += b;
             
         for (int j = 0; j < NUM_THREADS -1; j++) {
-            if (j != id) {
-                level[id] = j;          __mb__
-                last_to_enter[j] = id;  __mb__
-                while (last_to_enter[j] && exists(id,j)); 
-            }
+            level[id] = j;          
+            last_to_enter[j] = id;  
+            while (last_to_enter[j] && exists(id,j))
+                continue; 
         }
 
         bilDisp -= b;
         vendas[id] += b;
 
         level[id] = -1;
+        break;
     }
 
     pthread_exit(NULL);
+    
     return NULL;
 }
 
@@ -106,8 +107,6 @@ void peterson()
 
     for (int i = 0; i < NUM_THREADS; i++) {
         ids[i] = i;
-        //last_to_enter[i] = 0;
-        //level[i] = 0;
     }
 
     for (int i = 0; i < NUM_THREADS; i++) {
@@ -232,7 +231,7 @@ void *funcao(void *args)
 }   
 int main (int argc ,char * argv[])
 {
-    printf("\nBilheteira do EstÃ¡dio de Anfield\n");
+    printf("\nBilheteira do Estádio de Anfield\n");
     semente = atoi(argv[1]);
     metodo = atoi(argv[2]);
     pthread_t threads[NUM_THREADS];
