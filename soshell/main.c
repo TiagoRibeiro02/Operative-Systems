@@ -108,6 +108,48 @@ int builtin (char **args, int numargs)
     pthread_create(&th, NULL, socpwrapper, (void *)ptr);
     return 1;
   }
+  if (strcmp(args[0], "maior") == 0 && numargs==3){
+    struct stat s1, s2;
+
+    stat(args[1], &s1);
+    stat(args[2], &s2);
+
+    double sz1 = s1.st_size/1024.0;
+    double sz2 = s2.st_size/1024.0;
+    if (s1.st_size > s2.st_size)
+    {
+      printf("%s é maior %.1lf kb\n", args[1], sz1);
+    } else{
+      printf("%s é maior %.1lf kb\n", args[2], sz2);
+    }
+    return 1;
+  }
+  if (strcmp(args[0], "setx") == 0)
+  {
+    struct stat s1;
+    stat(args[1], &s1);
+    mode_t t = s1.st_mode;
+    t=t|S_IXUSR;
+    chmod(args[1], t);
+    return 1;
+  }
+  if (strcmp(args[0], "removerl") == 0)
+  {
+    struct stat s1;
+    stat(args[1], &s1);
+    mode_t t = s1.st_mode;
+    t=t &~ (S_IRGRP|S_IROTH);
+    chmod(args[1], t);
+    return 1;
+  }
+  if (strcmp(args[0], "sols") == 0)
+  {
+    listar(args[1]);
+    return 1;
+  }
+  
+  
+  
   
   
   

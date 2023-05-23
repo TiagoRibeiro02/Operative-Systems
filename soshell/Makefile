@@ -10,7 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm -lpthread
-OBS=main.o execute.o parse.o socp.o calc.o imageType.o redirects.o aviso.o socpth.o
+OBS=main.o execute.o parse.o socp.o calc.o imageType.o redirects.o aviso.o socpth.o listar.o
 
 #Alvo por defeito é o primeiro
 all :  soshell
@@ -33,6 +33,8 @@ aviso.o : shell.h aviso.c
 	$(CC) $(FLAGS) aviso.c
 socpth.o : shell.h socpth.c
 	$(CC) $(FLAGS) socpth.c
+listar.o : shell.h listar.c
+	$(CC) $(FLAGS) listar.c
 soshell : $(OBS)
 	$(CC)  -o soshell  $(OBS) $(LIBS)
 clean limpar:

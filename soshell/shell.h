@@ -31,6 +31,8 @@ void *socpwrapper(void *args);
 
 void socp(char *fonte, char *destino);
 
+void listar(char *pasta);
+
 
 /* constantes que podem tornar uteis*/
 
