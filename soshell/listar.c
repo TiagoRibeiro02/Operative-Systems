@@ -14,7 +14,7 @@ void listar(char *pasta){
     if(d){
         while ((dir = readdir(d)) != NULL)
         {
-            printf("%15s %i ", dir->d_name, dir->d_reclen);
+            printf("%lld %s %i\n ", (long long)dir->d_ino, dir->d_name, dir->d_reclen);
         }
         closedir(d);
     }
