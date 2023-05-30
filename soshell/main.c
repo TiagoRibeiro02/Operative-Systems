@@ -153,6 +153,7 @@ int builtin (char **args, int numargs)
     if (stat(args[1], &file_info) == -1)
     {
       perror(NULL);
+      return 1;
     }
 
     if (S_ISREG(file_info.st_mode))
