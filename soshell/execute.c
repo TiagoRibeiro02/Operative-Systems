@@ -17,9 +17,21 @@ int containsPipe(int numargs, char **args){
 }
 
 
+int ultimo(int *numargs, char **args){
+  if (args[*numargs -1][0] == '&')
+  {
+    *numargs = *numargs - 1;
+    args[*numargs] = NULL;
+    return BG;
+  }
+  return FG;
+  
+}
+
 void execute (int numargs, char **args)
 {
   int pid, pidFilho, status, fd[2];
+  int code = ultimo(&numargs, args);
 
   if ((pid = fork ()) < 0)
     { /* cria um processo progenito */
