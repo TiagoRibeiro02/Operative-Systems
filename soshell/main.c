@@ -147,15 +147,29 @@ int builtin (char **args, int numargs)
     listar(args[1]);
     return 1;
   }
-  
-  
-  
-  
-  
-  
-  
+  if (strcmp(args[0], "tipo") == 0)
+  {
+    struct stat file_info;
+    if (stat(args[1], &file_info) == -1)
+    {
+      perror(NULL);
+    }
 
+    if (S_ISREG(file_info.st_mode))
+    {
+      printf("Arquivo regular\n");
+    }
+    else if (S_ISDIR(file_info.st_mode))
+    {
+      printf("Diretório\n");
+    }
+    else{
+      printf("Outro tipo de arquivo\n");
+    }
 
+    return 1;
+  }
+  
 
 
   /* IMPORTANTE : 

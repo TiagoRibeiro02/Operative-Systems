@@ -30,7 +30,7 @@ int redirects(int numargs, char *args[])
     if (numargs < 3){
         return numargs; // Guard the following section
     }
-    if (strcmp(args[numargs - 2], ">") == 0)
+    if (strcmp(args[numargs - 2], "SAIDA") == 0)
     {
         int fd1 = creat(args[numargs -1], FILE_MODE);
         if (fd1 < 0)
@@ -66,7 +66,7 @@ int redirects(int numargs, char *args[])
         return numargs; // Guard the following section
     }
     // iii tratar do < open O_RDONLY
-    if (strcmp(args[numargs -2], "<") == 0)
+    if (strcmp(args[numargs -2], "ENTRADA") == 0)
     {
         int fd3 = open(args[numargs -1], O_RDONLY);
         if (fd3 < 0)
@@ -79,6 +79,8 @@ int redirects(int numargs, char *args[])
         args[numargs - 2] = NULL;
         numargs = numargs - 2;
     }
+    
+    
     
     return numargs; // devolver o numero de argumentos a passar para execvp
 }

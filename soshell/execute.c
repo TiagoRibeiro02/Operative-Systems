@@ -31,7 +31,7 @@ int ultimo(int *numargs, char **args){
 void execute (int numargs, char **args)
 {
   int pid, pidFilho, status, fd[2];
-  int code = ultimo(&numargs, args);
+  ultimo(&numargs, args);
 
   if ((pid = fork ()) < 0)
     { /* cria um processo progenito */
