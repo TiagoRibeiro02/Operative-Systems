@@ -1,0 +1,73 @@
+1-
+
+
+Confiabilidade: O sistema de gerenciamento de memória deve garantir a confiabilidade do sistema como um todo, prevenindo erros e problemas relacionados à memória, como vazamentos de memória, falhas de segmentação e acessos inválidos à memória. Ele deve impor proteção de memória para evitar que um processo acesse ou modifique a memória de outro processo.
+
+Eficiência: O sistema de gerenciamento de memória tem como objetivo utilizar a memória disponível de forma eficiente. Ele deve alocar memória para os processos de maneira que maximize o desempenho geral do sistema. Isso envolve técnicas como alocação dinâmica de memória, compactação de memória e troca de dados com o disco quando necessário.
+
+Equidade: O sistema de gerenciamento de memória deve fornecer acesso justo aos recursos de memória entre vários processos. Ele deve impedir que um processo monopolize a memória, o que levaria a uma degradação do desempenho ou à privação de outros processos. Vários algoritmos de alocação, como escalonamento round-robin ou baseado em prioridades, podem ser usados para alcançar a equidade.
+
+Transparência: O sistema de gerenciamento de memória deve fornecer transparência aos processos em execução no sistema. Os processos devem ser capazes de acessar a memória como se tivessem controle exclusivo, mesmo que a memória seja compartilhada entre vários processos. Essa transparência simplifica a programação e permite a execução eficiente dos processos sem a necessidade de gerenciar detalhes de memória de baixo nível.
+
+Flexibilidade: O sistema de gerenciamento de memória deve ser flexível o suficiente para se adaptar às necessidades de memória em constante mudança dos processos. Ele deve permitir a alocação e liberação dinâmicas de memória conforme os processos são criados ou encerrados. Além disso, o sistema deve suportar memória virtual, permitindo que os processos usem mais memória do que fisicamente disponível, utilizando o espaço em disco como uma extensão da memória principal.
+
+
+2- 
+pagina 15 capitulo 8(Teorica)
+
+3-
+pagina 17 capitulo 9(Teorica)
+
+pagina 12 capitulo 9(Teorica)
+
+4- 
+tamanho  * pagina fisica + offset = endereço fisico
+
+exercicio 5 frequencia 2014.2 solução 
+
+
+
+5-
+Melhoria do desempenho: A memória cache é uma memória de alta velocidade localizada entre a unidade de processamento central (CPU) e a memória principal. Ela armazena cópias dos dados e instruções frequentemente acessados ​​pela CPU. Com uma memória cache, as páginas de memória frequentemente utilizadas podem ser armazenadas próximas à CPU, reduzindo o tempo necessário para buscar os dados na memória principal. Isso resulta em um acesso mais rápido aos dados e, consequentemente, melhora o desempenho do sistema.
+
+Redução do tráfego de dados na memória principal: A memória cache age como um intermediário entre a CPU e a memória principal. Quando a CPU precisa acessar um dado, primeiro verifica a memória cache. Se o dado estiver presente na cache, ele é fornecido diretamente à CPU, evitando a necessidade de buscar o dado na memória principal. Isso reduz o tráfego de dados na memória principal, aliviando a carga do subsistema de memória e permitindo que a CPU trabalhe com mais eficiência.
+
+Aproveitamento do princípio de localidade: O princípio de localidade afirma que, em geral, os programas tendem a acessar repetidamente um conjunto restrito de dados e instruções em um curto espaço de tempo. A memória cache explora esse princípio, armazenando os dados e instruções mais frequentemente utilizados. Dessa forma, quando a CPU precisa acessar novamente esses dados, eles já estão disponíveis na memória cache, evitando a latência de acesso à memória principal. Isso aumenta a eficiência do sistema e melhora a taxa de acertos da cache.
+
+Minimização do tempo de acesso à memória principal: O acesso à memória principal é relativamente lento em comparação com a velocidade da CPU. Ao utilizar uma memória cache, que possui tempos de acesso significativamente menores do que a memória principal, é possível reduzir o tempo total necessário para acessar os dados. A CPU pode obter os dados mais rapidamente na memória cache, evitando a necessidade de aguardar o acesso à memória principal, resultando em um desempenho geral aprimorado.
+
+Portanto, ao combinar um sistema de memória paginada com uma memória cache, é possível obter um desempenho mais eficiente e reduzir o tempo de acesso à memória principal. Isso resulta em um sistema mais rápido, responsivo e capaz de lidar com a carga de trabalho de maneira mais eficiente.
+
+B-
+
+1-
+readers writers problem capitulo 7 I guess
+
+2-
+A divisible instruction refers to an instruction in computer programming that can be divided or executed in multiple steps or micro-operations. These steps can be executed concurrently or in a pipelined manner. Divisible instructions are typically found in complex instruction set computer (CISC) architectures, where a single instruction can perform multiple operations or have multiple micro-operations associated with it. The division of the instruction into multiple steps allows for greater flexibility and optimization of execution.
+
+On the other hand, an atomic instruction is an indivisible instruction or operation that is executed as a single, uninterruptible unit. Atomicity ensures that the instruction is treated as a single, indivisible entity, and it is guaranteed to be executed completely or not at all. In other words, an atomic instruction is not susceptible to interruption or concurrent modification by other instructions or processes. This property is crucial in concurrent programming and multi-threaded environments to ensure the consistency and integrity of shared data.
+b- ?
+c-
+Inibição de interrupções 
+Permitir um processo desligar interrupções, Inibição de interrupções,
+antes de entrar uma secção critica e ligar as interrupções quando sair da 
+secção critica
+ Assim CPU não pode trocar processos ! → Garante que um processo pode 
+utilizar uma variável partilhada sem a interferência de nenhum outro processo 
+ Mas desligando interrupções vai dar muito trabalho…
+ Assim o computador não vai poder atender interrupções durante muito 
+tempo.
+ Pode ser que um processo mal escrito ou com erro implica que a seguir o 
+OS nunca mais conseguir retomar o controlo
+ Crash
+ MultiCore/Multi-Processador
+ Desligando interrupts em apenas um processador não garante 
+exclusão mutuá duma variavel !!
+ Problemas com as Caches (write backs etc)
+ Desvantagens e perigos são maiores que as vantagens
+
+3- Capitulo 8
+
+4- capitulo 7 slide 26
+

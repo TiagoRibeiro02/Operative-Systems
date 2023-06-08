@@ -1,0 +1,72 @@
+1- freq 2012
+2-
+Data Execution Prevention (DEP) is a security feature implemented in modern operating systems to prevent the execution of malicious code in certain areas of memory. DEP helps protect against buffer overflow attacks and other forms of code injection by ensuring that executable code is only executed from designated memory regions.
+
+To implement DEP using a paginated memory system, the following steps can be taken:
+
+Memory Protection: The paginated memory system should include mechanisms for marking certain memory pages as non-executable. This can be achieved by setting appropriate permissions on the page table entries or using hardware-supported memory protection features.
+
+Page Table Modification: The operating system or runtime environment should modify the page table entries to designate memory pages as non-executable for data regions. This can be done by updating the appropriate flags or attributes in the page table entry corresponding to each page.
+
+Code Segmentation: The executable code should be loaded into designated executable memory regions or segments. These segments should have the necessary permissions to allow code execution, while non-executable regions should be strictly enforced as non-executable.
+
+Hardware Support: The processor architecture should support the execution of DEP. Many modern processors have features such as the NX bit (No-Execute) or XD bit (Execute Disable) that allow marking memory regions as non-executable. The operating system needs to utilize these hardware features to enforce DEP.
+
+Exception Handling: When an attempt is made to execute code from a non-executable memory page, the operating system should generate an exception or interrupt to handle the violation. This exception can be caught by the operating system, which can then take appropriate actions such as terminating the process or displaying an error message.
+
+By implementing these steps, the paginated memory system can enforce DEP by preventing the execution of code in memory regions designated for data. This helps protect against various types of code injection attacks, enhancing the overall security of the system.
+3-
+
+First fit é o primeiro
+Best fit maximiza a memoria disponivel por partição
+Tambem ha o worst fit
+
+4- 
+freq 2012 e 2014
+
+5-
+Com 4 molduras 9 falhas
+Com 5 molduras 10 folhas 
+Logo acontece a anomalia de Belamy 
+Logo LRU é melhor que FIFO
+
+7-
+
+Condição de exclusão mútua (Mutual Exclusion): Pelo menos um recurso deve ser alocado de forma exclusiva para um processo em determinado momento,
+ o que significa que apenas um processo pode usar o recurso por vez. Isso implica que, quando um processo está usando um recurso, outros processos
+ devem esperar para poder utilizá-lo.
+
+Condição de posse e espera (Hold and Wait): Um processo deve estar segurando pelo menos um recurso enquanto aguarda a aquisição de outro recurso. Isso significa que um processo mantém recursos alocados anteriormente enquanto solicita novos recursos, impedindo que outros processos possam utilizar esses recursos.
+
+Condição de não preempção (No Preemption): Os recursos alocados a um processo não podem ser retirados à força por outro processo. Somente o processo que detém um recurso pode liberá-lo voluntariamente após a sua utilização. Isso implica que os recursos são mantidos até que o processo tenha concluído seu uso, independentemente de outros processos necessitarem deles.
+
+Condição de espera circular (Circular Wait): Deve existir um ciclo de processos em espera, em que cada processo está esperando por
+ um recurso que é mantido pelo próximo processo no ciclo. Essa condição cria uma dependência circular entre os processos,
+  em que nenhum deles pode progredir porque está aguardando um recurso que está sendo retido por outro processo no ciclo.
+
+Frequencia 2014
+
+8- Frequencia de 2014
+Fluxograma de threads?
+Frequencia de 2014
+
+9-Frequencia de 2014
+
+O mecanismo de semáforo pode garantir a progressão e a espera limitada por meio de sua funcionalidade de bloqueio e liberação de recursos compartilhados. Essas características são fundamentais para evitar bloqueios mútuos e inanição, permitindo que os processos/threads façam progresso de forma controlada. Aqui está como o mecanismo de semáforo alcança esses objetivos:
+
+Progressão:
+Os semáforos são usados para coordenar o acesso a recursos compartilhados. Quando um processo/thread deseja acessar um recurso protegido por um semáforo, ele primeiro verifica o estado do semáforo. Se o semáforo estiver livre (sinalizado), o processo/thread pode adquirir o recurso e continuar com sua execução normalmente. Isso garante a progressão do processo/thread.
+No entanto, se o semáforo estiver ocupado (não sinalizado), o processo/thread é bloqueado. Ele é colocado em um estado de espera, impedindo-o de continuar sua execução até que o semáforo seja sinalizado por outro processo/thread que esteja usando o recurso. Assim que o semáforo é sinalizado, o processo/thread bloqueado é liberado e pode adquirir o recurso, permitindo que ele prossiga com sua execução. Dessa forma, o mecanismo de semáforo garante a progressão controlada e segura dos processos/threads, evitando bloqueios mútuos.
+
+Espera Limitada:
+O mecanismo de semáforo também ajuda a garantir uma espera limitada, ou seja, evita que um processo/thread fique indefinidamente bloqueado em um estado de espera. Os semáforos podem ser usados com recursos adicionais, como temporizadores ou limites de espera, para especificar um tempo máximo de espera permitido.
+Por exemplo, um semáforo pode ser usado juntamente com um temporizador para definir um limite de tempo para a espera de um recurso. Se um processo/thread ficar bloqueado por um período superior ao limite definido, ele pode ser acordado pelo temporizador e tratado de acordo com uma estratégia específica, como retornar um erro ou tomar alguma ação alternativa. Isso evita que um processo/thread fique preso em um estado de espera indefinidamente, permitindo que ele prossiga mesmo se o recurso não esteja disponível dentro de um limite de tempo razoável.
+
+Em resumo, o mecanismo de semáforo garante a progressão e a espera limitada por meio de seu mecanismo de bloqueio e liberação de recursos compartilhados. Ele permite que os processos/threads façam progresso ao adquirir recursos quando disponíveis e bloqueia-os quando os recursos estão ocupados. Além disso, a utilização de recursos adicionais, como temporizadores, permite definir limites de tempo para a espera de recursos, evitando bloqueios indefinidos e permitindo que os processos/threads tomem medidas apropriadas em caso de espera prolongada.
+
+
+
+
+
+
+
